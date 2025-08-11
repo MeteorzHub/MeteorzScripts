@@ -7,7 +7,6 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
     
-    /* Reset & base */
     * {
       box-sizing: border-box;
     }
@@ -18,7 +17,7 @@
       color: #eee;
       overflow-x: hidden;
       position: relative;
-      height: 100vh;
+      min-height: 100vh;
     }
 
     /* Spiral background */
@@ -42,7 +41,6 @@
       100% { transform: rotate(360deg) translate(0, 0); }
     }
 
-    /* Navbar */
     nav {
       position: fixed;
       top: 0;
@@ -62,32 +60,25 @@
       color: #fff;
       text-transform: uppercase;
       text-shadow: 0 0 8px #fff;
+      cursor: default;
     }
     nav a {
       color: #eee;
       text-decoration: none;
       margin-left: 2rem;
       font-weight: 500;
+      cursor: pointer;
       position: relative;
+      user-select: none;
     }
-    nav a::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      height: 2px;
-      bottom: -4px;
-      left: 0;
-      background: #fff;
-      transform: scaleX(0);
-      transform-origin: right;
-      transition: transform 0.3s ease;
+    nav a.active {
+      font-weight: 700;
+      border-bottom: 2px solid #eee;
     }
-    nav a:hover::after {
-      transform: scaleX(1);
-      transform-origin: left;
+    nav a:hover:not(.active) {
+      color: #bbb;
     }
 
-    /* Main container */
     main {
       padding: 100px 2rem 2rem;
       max-width: 900px;
@@ -95,21 +86,24 @@
       position: relative;
       z-index: 10;
       min-height: calc(100vh - 130px);
-      overflow-y: auto;
     }
 
-    /* Hero Section */
-    .hero {
-      text-align: center;
-      margin-bottom: 3rem;
-      animation: fadeIn 1.5s ease forwards;
+    section.page {
+      display: none;
+      animation: fadeIn 0.5s ease forwards;
     }
+    section.page.active {
+      display: block;
+    }
+
+    /* Hero */
     .hero h1 {
       font-size: 4rem;
       margin: 0;
       letter-spacing: 8px;
       color: #fff;
       text-shadow: 0 0 15px #fff;
+      text-align: center;
     }
     .hero p {
       font-size: 1.2rem;
@@ -118,9 +112,11 @@
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
+      text-align: center;
     }
     .btn {
-      margin-top: 2rem;
+      display: block;
+      margin: 2rem auto 0;
       background: transparent;
       border: 2px solid #eee;
       color: #eee;
@@ -134,6 +130,7 @@
       box-shadow:
         0 0 8px #eee;
       transition: background 0.3s ease, color 0.3s ease;
+      width: max-content;
     }
     .btn:hover {
       background: #eee;
@@ -154,11 +151,11 @@
       box-shadow: 0 0 8px #fff inset;
       outline: none;
       margin-bottom: 2rem;
-      transition: background 0.3s ease;
       max-width: 400px;
       display: block;
       margin-left: auto;
       margin-right: auto;
+      transition: background 0.3s ease;
     }
     #searchInput::placeholder {
       color: #aaa;
@@ -290,25 +287,14 @@
 
     /* Animations */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
     @keyframes fadeInScale {
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
     }
 
-    /* Scrollbar style */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #111;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #444;
-      border-radius: 4px;
-    }
   </style>
 </head>
 <body>
@@ -316,33 +302,35 @@
 <nav>
   <div class="logo">METEORZ</div>
   <div>
-    <a href="#home" onclick="scrollToSection('home')">Home</a>
-    <a href="#scripts" onclick="scrollToSection('scripts')">Scripts</a>
-    <a href="#about" onclick="scrollToSection('about')">About</a>
+    <a id="navHome" onclick="showSection('home')">Home</a>
+    <a id="navScripts" onclick="showSection('scripts')">Scripts</a>
+    <a id="navAbout" onclick="showSection('about')">About</a>
   </div>
 </nav>
 
 <main>
-  <section id="home" class="hero">
-    <h1>METEORZ</h1>
-    <p>The future of Roblox scripting — sleek, black & white, ready for every player.</p>
-    <button class="btn" onclick="scrollToSection('scripts')">Explore Scripts</button>
-  </section>
-
-  <section id="scripts" style="margin-top: 3rem;">
-    <input id="searchInput" type="text" placeholder="Search scripts..." oninput="filterScripts()" />
-    <div class="card-grid" id="scriptsGrid" style="margin-top:1.5rem;">
-      <!-- Script cards inserted by JS -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <h1>METEORZ</h1>
+      <p>The future of Roblox scripting — sleek, black & white, ready for every player.</p>
+      <button class="btn" onclick="showSection('scripts')">Explore Scripts</button>
     </div>
   </section>
 
-  <section id="about" style="margin-top: 5rem; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto; color:#ccc;">
+  <section id="scripts" class="page">
+    <input id="searchInput" type="text" placeholder="Search scripts..." oninput="filterScripts()" />
+    <div class="card-grid" id="scriptsGrid" style="margin-top:1.5rem;">
+      <!-- Cards will be created by JS -->
+    </div>
+  </section>
+
+  <section id="about" class="page" style="text-align:center; max-width:700px; margin-left:auto; margin-right:auto; color:#ccc;">
     <h2>About Meteorz</h2>
     <p>Meteorz is created by Bin Nou — a futuristic hub for Roblox scripts with a sleek black & white style, designed for mobile and desktop players alike.</p>
   </section>
 </main>
 
-<!-- Modal for script detail -->
+<!-- Modal for script details -->
 <div id="modalOverlay">
   <div id="modalContent">
     <button class="closeBtn" onclick="closeModal()">×</button>
@@ -352,24 +340,30 @@
 </div>
 
 <script>
+  // Your scripts data
   const scripts = [
     {
       id: 'shiftlock',
       name: 'Mobile Shiftlock',
       description: 'Enable shift-lock on mobile devices with this lightweight, easy-to-use script.',
-      code: `-- Mobile Shiftlock Script Example\nlocal UserInputService = game:GetService("UserInputService")\n-- Your full loader script goes here...`
+      code: `-- Mobile Shiftlock Script Example
+local UserInputService = game:GetService("UserInputService")
+-- Your full loader script goes here...`
     },
     {
       id: 'loader',
       name: 'Loader Script',
       description: 'A fast loader to quickly inject your scripts on Roblox.',
-      code: `-- Loader Script Example\nprint("Loading...")\n-- Put your full loader code here.`
+      code: `-- Loader Script Example
+print("Loading...")
+-- Put your full loader code here.`
     },
     {
       id: 'chatbypass',
       name: 'Chat Bypasser',
       description: 'Bypass chat restrictions with this advanced Roblox script.',
-      code: `-- Chat Bypass Script Example\nprint("Chat bypass active!")`
+      code: `-- Chat Bypass Script Example
+print("Chat bypass active!")`
     }
   ];
 
@@ -378,20 +372,25 @@
   const modalTitle = document.getElementById('modalTitle');
   const modalCode = document.getElementById('modalCode');
 
-  function createCard(script) {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.setAttribute('data-name', script.name.toLowerCase());
+  // Create cards for scripts
+  function createCards() {
+    scriptsGrid.innerHTML = '';
+    scripts.forEach(script => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.setAttribute('data-name', script.name.toLowerCase());
 
-    const title = document.createElement('h3');
-    title.textContent = script.name;
+      const title = document.createElement('h3');
+      title.textContent = script.name;
 
-    const desc = document.createElement('p');
-    desc.textContent = script.description;
+      const desc = document.createElement('p');
+      desc.textContent = script.description;
 
-    const btn = document.createElement('button');
-    btn.textContent = 'View / Copy';
-    btn.onclick = () => openModal(script);
+      const btn = document.createElement('button');
+      btn.textContent = 'View / Copy';
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        openModal(script);
+      };
 
-    card.appendChild(title);
-    card
+      card
