@@ -172,9 +172,11 @@
       box-shadow:
         0 0 10px #fff7;
       transition: box-shadow 0.3s ease, transform 0.3s ease;
-      cursor: pointer;
       position: relative;
       color: #eee;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .card:hover {
       box-shadow:
@@ -191,10 +193,16 @@
       color: #ccc;
       font-size: 1rem;
       line-height: 1.4;
-      margin: 1rem 0 0;
+      margin: 0.5rem 0 1rem;
+      flex-grow: 1;
+    }
+    .card .extraInfo {
+      font-size: 0.85rem;
+      color: #999;
+      margin-bottom: 1rem;
+      word-break: break-word;
     }
     .card button {
-      margin-top: 1.5rem;
       background: transparent;
       border: 2px solid #eee;
       color: #eee;
@@ -203,9 +211,8 @@
       border-radius: 50px;
       cursor: pointer;
       transition: background 0.3s ease, color 0.3s ease;
-      position: absolute;
-      bottom: 1.5rem;
-      right: 1.5rem;
+      align-self: flex-end;
+      margin-top: auto;
     }
     .card button:hover {
       background: #eee;
@@ -247,6 +254,11 @@
       font-weight: 700;
       font-size: 2rem;
       margin-bottom: 1rem;
+    }
+    #modalContent p {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: #ccc;
     }
     #modalContent pre {
       background: #222;
@@ -297,6 +309,12 @@
         0 0 20px #fff;
     }
 
+    a.discord-link {
+      color: #6fbfff;
+      text-decoration: underline;
+      word-break: break-word;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
@@ -337,6 +355,7 @@
   <section id="about" class="page" style="text-align:center; max-width:700px; margin-left:auto; margin-right:auto; color:#ccc;">
     <h2>About Meteorz</h2>
     <p>Meteorz is created by Bin Nou — a futuristic hub for Roblox scripts with a sleek black & white style, designed for mobile and desktop players alike.</p>
+    <p>Join our Discord for updates and support: <a href="https://discord.gg/bugY5f7d2C" target="_blank" class="discord-link">https://discord.gg/bugY5f7d2C</a></p>
   </section>
 </main>
 
@@ -344,8 +363,9 @@
   <div id="modalContent">
     <button class="closeBtn" onclick="closeModal()">×</button>
     <h2 id="modalTitle">Script Title</h2>
-    <pre id="modalDesc">Script description goes here...</pre>
-    <pre id="modalLoaderCode" style="background:#111; color:#fff; padding: 1rem; font-size: 1rem; border-radius: 10px;"></pre>
+    <p id="modalDesc">Script description goes here...</p>
+    <pre id="modalLoaderCode"></pre>
+    <p id="modalExtra"></p>
     <button id="copyLoaderBtn" onclick="copyLoaderCode()">Copy Loader Code</button>
   </div>
 </div>
@@ -357,9 +377,17 @@
       id: 'shiftlock',
       name: 'Mobile Shiftlock',
       description: 'Enable shift-lock on mobile devices with this lightweight, easy-to-use script.',
-      loaderCode: `loadstring(game:HttpGet('https://raw.githubusercontent.com/MeteorzHub/Mobile-shiftlock/refs/heads/main/ShiftlockLOADER.lua'))()`
+      loaderCode: `loadstring(game:HttpGet('https://raw.githubusercontent.com/MeteorzHub/Mobile-shiftlock/refs/heads/main/ShiftlockLOADER.lua'))()`,
+      extra: 'Discord: <a href="https://discord.gg/bugY5f7d2C" target="_blank" class="discord-link">https://discord.gg/bugY5f7d2C</a>'
     },
-    // Add more real scripts here as objects with name, description, loaderCode fields
+    {
+      id: 'invisible',
+      name: 'Invisible Script',
+      description: 'Make your Roblox character invisible with this simple script.',
+      loaderCode: `loadstring(game:HttpGet('https://pastebin.com/raw/3Rnd9rHf'))()`,
+      extra: 'Discord: <a href="https://discord.gg/bugY5f7d2C" target="_blank" class="discord-link">https://discord.gg/bugY5f7d2C</a>'
+    }
+    // Add more scripts here as objects
   ];
 
   // Cache DOM
@@ -379,6 +407,7 @@
   const modalTitle = document.getElementById('modalTitle');
   const modalDesc = document.getElementById('modalDesc');
   const modalLoaderCode = document.getElementById('modalLoaderCode');
+  const modalExtra = document.getElementById('modalExtra');
   const copyLoaderBtn = document.getElementById('copyLoaderBtn');
 
   // Show section and update URL hash & nav active state
@@ -434,61 +463,13 @@
       const desc = document.createElement('p');
       desc.textContent = script.description;
 
+      const extraInfo = document.createElement('p');
+      extraInfo.className = 'extraInfo';
+      extraInfo.innerHTML = script.extra || '';
+
       const btn = document.createElement('button');
       btn.textContent = 'View';
       btn.onclick = (e) => {
         e.stopPropagation();
         openModal(script);
       };
-
-      card.appendChild(title);
-      card.appendChild(desc);
-      card.appendChild(btn);
-      scriptsGrid.appendChild(card);
-    });
-  }
-
-  // Open modal with script details
-  function openModal(script) {
-    modalTitle.textContent = script.name;
-    modalDesc.textContent = script.description;
-    modalLoaderCode.textContent = script.loaderCode;
-    modalOverlay.classList.add('active');
-  }
-
-  // Close modal
-  function closeModal() {
-    modalOverlay.classList.remove('active');
-  }
-
-  // Copy loader code to clipboard
-  function copyLoaderCode() {
-    navigator.clipboard.writeText(modalLoaderCode.textContent).then(() => {
-      copyLoaderBtn.textContent = 'Copied!';
-      setTimeout(() => {
-        copyLoaderBtn.textContent = 'Copy Loader Code';
-      }, 1500);
-    }).catch(() => {
-      alert('Copy failed! Please copy manually.');
-    });
-  }
-
-  // Initialize site on load — show section based on URL hash
-  window.onload = () => {
-    const hash = window.location.hash.slice(1);
-    if (hash && pages[hash]) {
-      showSection(hash);
-    } else {
-      showSection('home');
-    }
-    renderScripts(scripts);
-  };
-
-  // Close modal on clicking outside modal content
-  modalOverlay.addEventListener('click', (e) => {
-    if (e.target === modalOverlay) closeModal();
-  });
-</script>
-
-</body>
-</html>
