@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Meteorz - Futuristic Roblox Scripts</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background: #000;
+    color: #eee;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Navbar */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(10px);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+  }
+  nav .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: #0ff;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #0ff;
+  }
+  nav a {
+    color: #eee;
+    text-decoration: none;
+    margin-left: 2rem;
+    position: relative;
+    font-weight: 500;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background: #0ff;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  nav a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Hero Section */
+  .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+    animation: fadeIn 1.5s ease forwards;
+  }
+  .hero h1 {
+    font-size: 4rem;
+    margin: 0;
+    letter-spacing: 6px;
+    color: #0ff;
+    text-shadow: 0 0 15px #0ff;
+  }
+  .hero p {
+    font-size: 1.25rem;
+    margin: 1rem 0 2rem;
+    max-width: 600px;
+    color: #ccc;
+  }
+  .btn-glow {
+    background: transparent;
+    border: 2px solid #0ff;
+    color: #0ff;
+    padding: 0.75rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 50px;
+    box-shadow:
+      0 0 5px #0ff,
+      0 0 15px #0ff,
+      0 0 30px #0ff;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .btn-glow:hover {
+    background: #0ff;
+    color: #000;
+    box-shadow:
+      0 0 10px #0ff,
+      0 0 30px #0ff,
+      0 0 60px #0ff;
+  }
+
+  /* Fade in animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scripts Section */
+  .scripts {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .scripts h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #0ff;
+    margin-bottom: 3rem;
+    text-shadow: 0 0 10px #0ff;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2rem;
+  }
+  .card {
+    background: #111;
+    border: 2px solid #0ff;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow:
+      0 0 8px #0ff;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .card:hover {
+    box-shadow:
+      0 0 15px #0ff,
+      0 0 30px #0ff;
+    transform: translateY(-10px);
+  }
+  .card h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #0ff;
+  }
+  .card p {
+    color: #ccc;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  .card button {
+    margin-top: 1.5rem;
+    background: transparent;
+    border: 2px solid #0ff;
+    color: #0ff;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  .card button:hover {
+    background: #0ff;
+    color: #000;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 2rem 1rem;
+    color: #555;
+    font-size: 0.9rem;
+    border-top: 1px solid #222;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">METEORZ</div>
+  <div class="nav-links">
+    <a href="#scripts">Scripts</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <h1>METEORZ</h1>
+  <p>Next-gen Roblox scripts — futuristic, sleek, ready to use.</p>
+  <button class="btn-glow" onclick="scrollToScripts()">Get Started</button>
+</section>
+
+<section class="scripts" id="scripts">
+  <h2>Featured Scripts</h2>
+  <div class="card-grid">
+    <div class="card">
+      <h3>Mobile Shiftlock</h3>
+      <p>Enable shift-lock on mobile devices with this lightweight, easy-to-use script.</p>
+      <button onclick="visitScript('shiftlock')">View / Copy</button>
+    </div>
+    <div class="card">
+      <h3>Loader Script</h3>
+      <p>A fast loader to quickly inject your scripts on Roblox.</p>
+      <button onclick="visitScript('loader')">View / Copy</button>
+    </div>
+    <!-- Add more script cards here -->
+  </div>
+</section>
+
+<section class="about" id="about" style="padding: 4rem 2rem; max-width: 800px; margin: auto; color:#ccc; text-align:center;">
+  <h2>About Meteorz</h2>
+  <p>Created by Bin Nou, Meteorz is a hub for cutting-edge Roblox scripts designed for mobile and desktop players. We focus on clean, efficient, and futuristic code to level up your gameplay experience.</p>
+</section>
+
+<footer id="contact">
+  <p>© 2025 Meteorz. Connect on <a href="https://discord.gg/yourdiscord" style="color:#0ff;">Discord</a> | GitHub | Twitter</p>
+</footer>
+
+<script>
+  function scrollToScripts() {
+    document.getElementById('scripts').scrollIntoView({behavior: 'smooth'});
+  }
+  function visitScript(name) {
+    // Replace these URLs with your actual hosted pages
+    const urls = {
+      shiftlock: 'https://yourdomain.com/shiftlock.html',
+      loader: 'https://yourdomain.com/loader.html',
+    };
+    window.open(urls[name], '_blank');
+  }
+</script>
+
+</body>
+</html>
