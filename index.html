@@ -1,200 +1,397 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Meteorz - Futuristic Script Hub</title>
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-  
-  /* Basic Reset */
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #000;
-    color: #eee;
-    overflow-x: hidden;
-    position: relative;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meteorz - Futuristic Black & White Script Hub</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+    
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #000;
+      color: #eee;
+      overflow-x: hidden;
+      position: relative;
+      height: 100vh;
+    }
 
-  /* Spiral background */
-  body::before {
-    content: "";
-    position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at center, #0ff, transparent 70%);
-    animation: spiral 20s linear infinite;
-    opacity: 0.1;
-    pointer-events: none;
-    z-index: 0;
-  }
+    /* Spiral background */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle at center, #fff, transparent 80%);
+      animation: spiral 30s linear infinite;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+      filter: grayscale(100%);
+    }
+    @keyframes spiral {
+      0% { transform: rotate(0deg) translate(0, 0); }
+      100% { transform: rotate(360deg) translate(0, 0); }
+    }
 
-  @keyframes spiral {
-    0% { transform: rotate(0deg) translate(0, 0); }
-    100% { transform: rotate(360deg) translate(0, 0); }
-  }
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.85);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 20;
+      box-shadow: 0 0 8px #fff33a33;
+    }
+    nav .logo {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: 3px;
+      color: #fff;
+      text-transform: uppercase;
+      text-shadow: 0 0 8px #fff;
+    }
+    nav a {
+      color: #eee;
+      text-decoration: none;
+      margin-left: 2rem;
+      font-weight: 500;
+      position: relative;
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: #fff;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+    nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
 
-  nav {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(0,0,0,0.85);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 10;
-    box-shadow: 0 0 15px #0ff44a66;
-  }
-  nav .logo {
-    font-weight: 700;
-    font-size: 1.6rem;
-    letter-spacing: 3px;
-    color: #0ff;
-    text-transform: uppercase;
-    text-shadow: 0 0 8px #0ff;
-  }
+    /* Main container */
+    main {
+      padding: 100px 2rem 2rem;
+      max-width: 900px;
+      margin: auto;
+      position: relative;
+      z-index: 10;
+      min-height: calc(100vh - 130px);
+      overflow-y: auto;
+    }
 
-  main {
-    padding: 100px 2rem 2rem;
-    max-width: 1200px;
-    margin: auto;
-    position: relative;
-    z-index: 5;
-  }
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeIn 1.5s ease forwards;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      margin: 0;
+      letter-spacing: 8px;
+      color: #fff;
+      text-shadow: 0 0 15px #fff;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: #bbb;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn {
+      margin-top: 2rem;
+      background: transparent;
+      border: 2px solid #eee;
+      color: #eee;
+      padding: 0.75rem 2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow:
+        0 0 8px #eee;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .btn:hover {
+      background: #eee;
+      color: #000;
+      box-shadow:
+        0 0 20px #fff;
+    }
 
-  /* Search bar */
-  #searchInput {
-    width: 100%;
-    max-width: 400px;
-    padding: 12px 16px;
-    font-size: 1.1rem;
-    border-radius: 50px;
-    border: 2px solid #0ff;
-    background: transparent;
-    color: #eee;
-    box-shadow:
-      0 0 10px #0ff,
-      inset 0 0 5px #0ff;
-    outline: none;
-    margin-bottom: 2rem;
-    transition: background 0.3s ease;
-  }
-  #searchInput::placeholder {
-    color: #bbb;
-  }
-  #searchInput:focus {
-    background: #001f1f;
-  }
+    /* Search bar */
+    #searchInput {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      border: 2px solid #eee;
+      background: transparent;
+      color: #eee;
+      box-shadow: 0 0 8px #fff inset;
+      outline: none;
+      margin-bottom: 2rem;
+      transition: background 0.3s ease;
+      max-width: 400px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    #searchInput::placeholder {
+      color: #aaa;
+    }
+    #searchInput:focus {
+      background: #222;
+    }
 
-  /* Scripts grid */
-  .card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-    gap: 2rem;
-  }
+    /* Scripts grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: #111;
+      border: 2px solid #eee;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow:
+        0 0 10px #fff7;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      color: #eee;
+    }
+    .card:hover {
+      box-shadow:
+        0 0 25px #fff,
+        0 0 50px #fff9;
+      transform: translateY(-10px);
+    }
+    .card h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .card p {
+      color: #ccc;
+      font-size: 1rem;
+      line-height: 1.4;
+      margin: 1rem 0 0;
+    }
+    .card button {
+      margin-top: 1.5rem;
+      background: transparent;
+      border: 2px solid #eee;
+      color: #eee;
+      padding: 0.5rem 1.5rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s ease, color 0.3s ease;
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+    }
+    .card button:hover {
+      background: #eee;
+      color: #000;
+    }
 
-  .card {
-    background: #111;
-    border: 2px solid #0ff;
-    border-radius: 20px;
-    padding: 2rem;
-    box-shadow:
-      0 0 15px #0ff88aa;
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
-    cursor: default;
-  }
-  .card:hover {
-    box-shadow:
-      0 0 30px #0ff,
-      0 0 60px #0ffaa;
-    transform: translateY(-10px);
-  }
-  .card h3 {
-    margin-top: 0;
-    color: #0ff;
-    font-size: 1.5rem;
-  }
-  .card p {
-    color: #ccc;
-    font-size: 1rem;
-    line-height: 1.4;
-    margin: 1rem 0;
-  }
-  .card button {
-    background: transparent;
-    border: 2px solid #0ff;
-    color: #0ff;
-    padding: 0.5rem 1.5rem;
-    font-weight: 700;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease;
-  }
-  .card button:hover {
-    background: #0ff;
-    color: #000;
-  }
+    /* Modal overlay */
+    #modalOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+    }
+    #modalOverlay.active {
+      display: flex;
+    }
 
-</style>
+    /* Modal content */
+    #modalContent {
+      background: #111;
+      border: 2px solid #eee;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      padding: 2rem;
+      box-shadow:
+        0 0 40px #fff;
+      overflow-y: auto;
+      position: relative;
+      color: #eee;
+      animation: fadeInScale 0.4s ease forwards;
+    }
+    #modalContent h2 {
+      margin-top: 0;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    #modalContent pre {
+      background: #222;
+      padding: 1rem;
+      border-radius: 10px;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.9rem;
+      max-height: 50vh;
+      overflow-y: auto;
+      color: #ddd;
+      border: 1px solid #444;
+    }
+    #modalContent button.closeBtn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      color: #eee;
+      cursor: pointer;
+      font-weight: 700;
+      transition: color 0.3s ease;
+    }
+    #modalContent button.closeBtn:hover {
+      color: #fff;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    /* Scrollbar style */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #444;
+      border-radius: 4px;
+    }
+  </style>
 </head>
 <body>
 
 <nav>
   <div class="logo">METEORZ</div>
+  <div>
+    <a href="#home" onclick="scrollToSection('home')">Home</a>
+    <a href="#scripts" onclick="scrollToSection('scripts')">Scripts</a>
+    <a href="#about" onclick="scrollToSection('about')">About</a>
+  </div>
 </nav>
 
 <main>
-  <input id="searchInput" type="text" placeholder="Search scripts..." oninput="filterScripts()" />
+  <section id="home" class="hero">
+    <h1>METEORZ</h1>
+    <p>The future of Roblox scripting — sleek, black & white, ready for every player.</p>
+    <button class="btn" onclick="scrollToSection('scripts')">Explore Scripts</button>
+  </section>
 
-  <div class="card-grid" id="scriptsGrid">
-    <div class="card" data-name="mobile shiftlock">
-      <h3>Mobile Shiftlock</h3>
-      <p>Enable shift-lock on mobile devices with this lightweight, easy-to-use script.</p>
-      <button onclick="openScript('shiftlock')">View / Copy</button>
+  <section id="scripts" style="margin-top: 3rem;">
+    <input id="searchInput" type="text" placeholder="Search scripts..." oninput="filterScripts()" />
+    <div class="card-grid" id="scriptsGrid" style="margin-top:1.5rem;">
+      <!-- Script cards inserted by JS -->
     </div>
-    <div class="card" data-name="loader script">
-      <h3>Loader Script</h3>
-      <p>A fast loader to quickly inject your scripts on Roblox.</p>
-      <button onclick="openScript('loader')">View / Copy</button>
-    </div>
-    <div class="card" data-name="chat bypasser">
-      <h3>Chat Bypasser</h3>
-      <p>Bypass chat restrictions with this advanced Roblox script.</p>
-      <button onclick="openScript('chatbypass')">View / Copy</button>
-    </div>
-    <!-- Add more cards as needed -->
-  </div>
+  </section>
+
+  <section id="about" style="margin-top: 5rem; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto; color:#ccc;">
+    <h2>About Meteorz</h2>
+    <p>Meteorz is created by Bin Nou — a futuristic hub for Roblox scripts with a sleek black & white style, designed for mobile and desktop players alike.</p>
+  </section>
 </main>
 
-<script>
-  function filterScripts() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
-    const cards = document.querySelectorAll('#scriptsGrid .card');
-    cards.forEach(card => {
-      const name = card.getAttribute('data-name');
-      if(name.includes(input)) {
-        card.style.display = '';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  }
-  function openScript(name) {
-    const urls = {
-      shiftlock: 'https://yourdomain.com/shiftlock.html',
-      loader: 'https://yourdomain.com/loader.html',
-      chatbypass: 'https://yourdomain.com/chatbypass.html'
-    };
-    window.open(urls[name], '_blank');
-  }
-</script>
+<!-- Modal for script detail -->
+<div id="modalOverlay">
+  <div id="modalContent">
+    <button class="closeBtn" onclick="closeModal()">×</button>
+    <h2 id="modalTitle">Script Title</h2>
+    <pre id="modalCode">Code goes here...</pre>
+  </div>
+</div>
 
-</body>
-</html>
+<script>
+  const scripts = [
+    {
+      id: 'shiftlock',
+      name: 'Mobile Shiftlock',
+      description: 'Enable shift-lock on mobile devices with this lightweight, easy-to-use script.',
+      code: `-- Mobile Shiftlock Script Example\nlocal UserInputService = game:GetService("UserInputService")\n-- Your full loader script goes here...`
+    },
+    {
+      id: 'loader',
+      name: 'Loader Script',
+      description: 'A fast loader to quickly inject your scripts on Roblox.',
+      code: `-- Loader Script Example\nprint("Loading...")\n-- Put your full loader code here.`
+    },
+    {
+      id: 'chatbypass',
+      name: 'Chat Bypasser',
+      description: 'Bypass chat restrictions with this advanced Roblox script.',
+      code: `-- Chat Bypass Script Example\nprint("Chat bypass active!")`
+    }
+  ];
+
+  const scriptsGrid = document.getElementById('scriptsGrid');
+  const modalOverlay = document.getElementById('modalOverlay');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalCode = document.getElementById('modalCode');
+
+  function createCard(script) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.setAttribute('data-name', script.name.toLowerCase());
+
+    const title = document.createElement('h3');
+    title.textContent = script.name;
+
+    const desc = document.createElement('p');
+    desc.textContent = script.description;
+
+    const btn = document.createElement('button');
+    btn.textContent = 'View / Copy';
+    btn.onclick = () => openModal(script);
+
+    card.appendChild(title);
+    card
